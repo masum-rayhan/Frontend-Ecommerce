@@ -1,15 +1,13 @@
-import { Header, Footer } from "../components/layout";
+import { Header, Home, Footer } from "../components/layout";
 
-
-function App() {
-
+const App = () => {
   return (
     <div>
       <Header />
-      Main Component
+      <Home />
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
