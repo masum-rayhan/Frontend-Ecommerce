@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { menuItemModel } from "../../interfaces";
+import { MenuItemCard } from ".";
 
 const MenuItemList = () => {
   const [menuItems, setMenuItems] = useState<menuItemModel[]>([]);
@@ -13,7 +14,11 @@ const MenuItemList = () => {
       });
   }, []);
 
-  return <div>menuItemList-component</div>;
+  return <div className="container row">
+    {menuItems.length > 0 && menuItems.map((menuItem, index) => (
+        <MenuItemCard key={index} menuItem={menuItem} />
+    ))}
+  </div>;
 };
 
 export default MenuItemList;
