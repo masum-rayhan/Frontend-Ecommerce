@@ -1,5 +1,5 @@
 import React from 'react'
-import { MenuItemList } from '../pages';
+import { MenuItemList } from '../pages/menu-items';
 
 const Home = () => {
   return (
