@@ -1,9 +1,13 @@
+import { Header, Footer } from "../components/layout";
+
 
 function App() {
 
   return (
-    <div className="text-success">
-      <p>Hello</p>
+    <div>
+      <Header />
+      Main Component
+      <Footer />
     </div>
   )
 }
