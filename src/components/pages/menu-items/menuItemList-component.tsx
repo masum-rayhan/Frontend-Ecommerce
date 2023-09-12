@@ -6,7 +6,7 @@ const MenuItemList = () => {
   const [menuItems, setMenuItems] = useState<menuItemModel[]>([]);
 
   useEffect(() => {
-    fetch("https://foodfancywebapi.azurewebsites.net/menuItem")
+    fetch("")
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

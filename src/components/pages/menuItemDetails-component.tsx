@@ -1,15 +1,9 @@
-import { menuItemModel } from "../../interfaces";
-
 const MenuItemDetails = () => {
-  interface Props {
-    menuItem: menuItemModel;
-  }
-  
   return (
     <div className="container pt-4 pt-md-5">
       <div className="row">
         <div className="col-7">
-          <h2 className="text-success">{props.menuItemDetails.}</h2>
+          <h2 className="text-success">NAME</h2>
           <span>
             <span
               className="badge text-bg-dark pt-2"
