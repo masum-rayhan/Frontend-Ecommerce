@@ -17,7 +17,9 @@ const MenuItemList = () => {
     }
   }, [isLoading]);
 
-  return (
+  if(isLoading) return (<div>Loading...</div>);
+
+  return ( 
     <div className="container row">
       {data.result.length > 0 &&
         data.result.map((menuItem: menuItemModel, index: number) => (
