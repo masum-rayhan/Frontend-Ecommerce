@@ -2,6 +2,7 @@ import { useState } from "react";
 import { menuItemModel } from "../../../interfaces";
 import { Link } from "react-router-dom";
 import { useUpdateShoppingCartMutation } from "../../../apis/shoppingCart-api";
+import { MiniLoader } from "../common";
 
 interface Props {
   menuItem: menuItemModel;
@@ -64,12 +65,7 @@ const MenuItemCard = (props: Props) => {
                 right: "15px",
               }}
             >
-              <div
-                className={"spinner-border text-warning"}
-                style={{ scale: "100%" }}
-              >
-                {" "}
-              </div>
+              <MiniLoader />
             </div>
           ) : (
             <i
