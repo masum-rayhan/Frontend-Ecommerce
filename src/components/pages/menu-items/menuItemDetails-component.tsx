@@ -31,10 +31,6 @@ const MenuItemDetails = () => {
       userid: '6ee5c807-dda5-4336-8c60-36ea8b2898be'
     });
     setIsAddingToCart(false);
-    // if (response.data) {
-    //   navigate("/cart");
-    // }
-    console.log(response);
   }
 
   return (
