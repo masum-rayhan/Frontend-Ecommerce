@@ -8,10 +8,10 @@ const shoppingCartApi = createApi({
   tagTypes: ["ShoppingCarts"],
   endpoints: (builder) => ({
     getShoppingCart: builder.query({
-      query: (userid) => ({
+      query: (userId) => ({
         url: `shopping-cart`,
         params: {
-          userid: userid,
+          userid: userId,
         },
       }),
       providesTags: ["ShoppingCarts"],
