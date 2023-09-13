@@ -8,19 +8,19 @@ interface Props {
 }
 
 const MenuItemCard = (props: Props) => {
-const [isAddingToCart, setIsAddingToCart] = useState<boolean>(false);
-const [updateShoppingCart] = useUpdateShoppingCartMutation();
+  const [isAddingToCart, setIsAddingToCart] = useState<boolean>(false);
+  const [updateShoppingCart] = useUpdateShoppingCartMutation();
 
-const handleAddToCart = async (menuItemId:number) => {
-  setIsAddingToCart(true);
+  const handleAddToCart = async (menuItemId: number) => {
+    setIsAddingToCart(true);
 
-  const response = await updateShoppingCart({
-    menuItemId: menuItemId,
-    updateQuantityBy: 1,
-    userid: '6ee5c807-dda5-4336-8c60-36ea8b2898be'
-  });
-  setIsAddingToCart(false);
-}
+    const response = await updateShoppingCart({
+      menuItemId: menuItemId,
+      updateQuantityBy: 1,
+      userid: "6ee5c807-dda5-4336-8c60-36ea8b2898be",
+    });
+    setIsAddingToCart(false);
+  };
   return (
     <div className="col-md-4 col-12 p-4">
       <div
@@ -56,19 +56,36 @@ const handleAddToCart = async (menuItemId:number) => {
               </i>
             )}
 
-          <i
-            className="bi bi-cart-plus btn btn-outline-danger"
-            style={{
-              position: "absolute",
-              top: "15px",
-              right: "15px",
-              padding: "5px 10px",
-              borderRadius: "3px",
-              outline: "none !important",
-              cursor: "pointer",
-            }}
-            onClick={() => handleAddToCart(props.menuItem.id)}
-          ></i>
+          {isAddingToCart ? (
+            <div
+              style={{
+                position: "absolute",
+                top: "15px",
+                right: "15px",
+              }}
+            >
+              <div
+                className={"spinner-border text-warning"}
+                style={{ scale: "100%" }}
+              >
+                {" "}
+              </div>
+            </div>
+          ) : (
+            <i
+              className="bi bi-cart-plus btn btn-outline-danger"
+              style={{
+                position: "absolute",
+                top: "15px",
+                right: "15px",
+                padding: "5px 10px",
+                borderRadius: "3px",
+                outline: "none !important",
+                cursor: "pointer",
+              }}
+              onClick={() => handleAddToCart(props.menuItem.id)}
+            ></i>
+          )}
 
           <div className="text-center">
             <p className="card-title m-0 text-success fs-3">
