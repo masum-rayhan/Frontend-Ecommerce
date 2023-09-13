@@ -1,4 +1,4 @@
-import { menuItemModel } from "../../interfaces";
+import { menuItemModel } from "../../../interfaces";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -14,7 +14,7 @@ const MenuItemCard = (props: Props) => {
       >
         <div className="card-body pt-2">
           <div className="row col-10 offset-1 p-4">
-            <Link to={`/menu-item-details/${props.menuItem.id}`}>
+            <Link to={`/menuItemDetails/${props.menuItem.id}`}>
               <img
                 src={props.menuItem.image}
                 style={{ borderRadius: "50%" }}
@@ -57,7 +57,7 @@ const MenuItemCard = (props: Props) => {
           <div className="text-center">
             <p className="card-title m-0 text-success fs-3">
               <Link
-                to={`/menu-item-details/${props.menuItem.id}`}
+                to={`/menuItemDetails/${props.menuItem.id}`}
                 style={{ textDecoration: "none", color: "green" }}
               >
                 {props.menuItem.name}

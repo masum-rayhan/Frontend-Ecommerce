@@ -5,19 +5,20 @@ const menuItemApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://foodfancywebapi.azurewebsites.net/",
   }),
-  tagTypes: ["MenuItem"],
+  tagTypes: ["MenuItems"],
   endpoints: (builder) => ({
+    
     getMenuItems: builder.query({
       query: () => ({
         url: `menuItem`,
       }),
-      providesTags: ["MenuItem"],
+      providesTags: ["MenuItems"],
     }),
     getMenuItemsById: builder.query({
         query: (id) => ({
-          url: `menuItem/&{id}}`,
+          url: `menuItem/${id}`,
         }),
-        providesTags: ["MenuItem"],
+        providesTags: ["MenuItems"],
       }),
   }),
 });

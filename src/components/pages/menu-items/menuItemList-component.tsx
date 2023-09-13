@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { MenuItemCard } from ".";
 import { menuItemModel } from "../../../interfaces";
 import { useGetMenuItemsQuery } from "../../../apis/menuItem-api";
