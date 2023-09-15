@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useGetMenuItemsByIdQuery } from "../../../apis/menuItem-api";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUpdateShoppingCartMutation } from "../../../apis/shoppingCart-api";
-import { MainLoader } from "../common";
+import { MainLoader, MiniLoader } from "../common";
 
 const MenuItemDetails = () => {
   const { menuItemId } = useParams();
@@ -77,12 +77,18 @@ const MenuItemDetails = () => {
             </span>
             <div className="row pt-4">
               <div className="col-5">
-                <button
-                  onClick={() => handleAddToCart(data.result?.id)}
-                  className="btn btn-success form-control"
-                >
-                  Add to Cart
-                </button>
+                {isAddingToCart ? (
+                  <button disabled className="btn btn-success form-control">
+                    <MiniLoader />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleAddToCart(data.result?.id)}
+                    className="btn btn-success form-control"
+                  >
+                    Add to Cart
+                  </button>
+                )}
               </div>
 
               <div className="col-5 ">
