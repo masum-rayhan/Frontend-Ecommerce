@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useGetShoppingCartQuery } from "../apis/shoppingCart-api";
 import { useEffect } from "react";
 import { setShoppingCart } from "../storage/redux/shoppingCart-slice";
+import { ShoppingCart } from "../components/pages/cart";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const App = () => {
             path="/menuItemDetails/:menuItemId"
             element={<MenuItemDetails />}
           ></Route>
+          <Route path="/shopping-cart" element={<ShoppingCart />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
