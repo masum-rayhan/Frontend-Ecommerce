@@ -3,8 +3,10 @@ import { useSelector } from "react-redux";
 import { cartItemModel } from "../../../interfaces";
 import { inputHelper } from "../../../helper";
 import { useState } from "react";
+import { MiniLoader } from "../common";
 
 const CartPickUpDetails = () => {
+  const [loading, setLoading] = useState(false);
   const shoppingCartFromStore: cartItemModel[] = useSelector(
     (state: RootState) => state.shoppingCartStore.cartItems ?? []
   );
@@ -14,14 +16,14 @@ const CartPickUpDetails = () => {
     name: "",
     email: "",
     phoneNumber: "",
-  }
+  };
 
   const [userInput, setUserInput] = useState(initialUserData);
 
-  const handleUserInput = (event : React.ChangeEvent<HTMLInputElement>) => {
+  const handleUserInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const tempData = inputHelper(event, userInput);
     setUserInput(tempData);
-  }
+  };
 
   shoppingCartFromStore?.map((cartItem: cartItemModel) => {
     totalItems += cartItem.quantity ?? 0;
@@ -29,13 +31,18 @@ const CartPickUpDetails = () => {
     return null;
   });
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+  };
+
   return (
     <div className="border pb-5 pt-3">
       <h1 style={{ fontWeight: "300" }} className="text-center text-success">
         Pickup Details
       </h1>
       <hr />
-      <form className="col-10 mx-auto">
+      <form onSubmit={handleSubmit} className="col-10 mx-auto">
         <div className="form-group mt-3">
           Pickup Name
           <input
@@ -82,8 +89,9 @@ const CartPickUpDetails = () => {
         <button
           type="submit"
           className="btn btn-lg btn-success form-control mt-3"
+          disabled={loading}
         >
-          Looks Good? Place Order!
+          {loading ? <MiniLoader /> : "Looks Good? Place Order!"}
         </button>
       </form>
     </div>

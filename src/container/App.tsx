@@ -6,6 +6,7 @@ import { useGetShoppingCartQuery } from "../apis/shoppingCart-api";
 import { useEffect } from "react";
 import { setShoppingCart } from "../storage/redux/shoppingCart-slice";
 import { ShoppingCart } from "../components/pages/cart";
+import { Login, Register } from "../components/pages/auth";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,8 @@ const App = () => {
             element={<MenuItemDetails />}
           ></Route>
           <Route path="/shopping-cart" element={<ShoppingCart />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/login" element={<Login />}></Route>
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
