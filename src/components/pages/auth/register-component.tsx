@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { SD_Roles } from "../../../utils/SD";
-import { inputHelper } from "../../../helper";
+import { inputHelper, toastNotify } from "../../../helper";
 import { useRegisterUserMutation } from "../../../apis/auth-api";
 import { apiResponse } from "../../../interfaces";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [registerUser] = useRegisterUserMutation();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState({
     userName: "",
@@ -33,9 +35,10 @@ const Register = () => {
     });
 
     if (response.data) {
-      console.log(response.data);
+      toastNotify('User registered successfully');
+      navigate("/login");
     } else if (response.error) {
-      console.log(response.error.data.errorMessages[0]);
+      toastNotify(response.error.data.errorMessages[0], "error");
     }
     setLoading(false);
   };
