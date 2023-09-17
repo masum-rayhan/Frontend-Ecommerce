@@ -6,7 +6,13 @@ import { useGetShoppingCartQuery } from "../apis/shoppingCart-api";
 import { useEffect } from "react";
 import { setShoppingCart } from "../storage/redux/shoppingCart-slice";
 import { ShoppingCart } from "../components/pages/cart";
-import { Login, Register } from "../components/pages/auth";
+import {
+  AccessDenied,
+  AuthTest,
+  AuthTestAdmin,
+  Login,
+  Register,
+} from "../components/pages/auth";
 import { userModel } from "../interfaces";
 import jwt_decode from "jwt-decode";
 import { setLoggedInUser } from "../storage/redux/userAuth-slice";
@@ -46,6 +52,11 @@ const App = () => {
           <Route path="/shopping-cart" element={<ShoppingCart />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/login" element={<Login />}></Route>
+
+          <Route path="/authentication" element={<AuthTest />}></Route>
+          <Route path="/authorization" element={<AuthTestAdmin />}></Route>
+          <Route path="/accessDenied" element={<AccessDenied />}></Route>
+
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

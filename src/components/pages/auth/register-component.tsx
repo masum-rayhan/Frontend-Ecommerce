@@ -4,6 +4,7 @@ import { inputHelper, toastNotify } from "../../../helper";
 import { useRegisterUserMutation } from "../../../apis/auth-api";
 import { apiResponse } from "../../../interfaces";
 import { useNavigate } from "react-router-dom";
+import { MainLoader } from "../common";
 
 const Register = () => {
   const [registerUser] = useRegisterUserMutation();
@@ -35,7 +36,7 @@ const Register = () => {
     });
 
     if (response.data) {
-      toastNotify('User registered successfully');
+      toastNotify("User registered successfully");
       navigate("/login");
     } else if (response.error) {
       toastNotify(response.error.data.errorMessages[0], "error");
@@ -45,6 +46,7 @@ const Register = () => {
 
   return (
     <div className="container text-center">
+      {loading && <MainLoader />}
       <form method="post" onSubmit={handleSubmit}>
         <h1 className="mt-5">Register</h1>
         <div className="mt-5">
@@ -96,13 +98,13 @@ const Register = () => {
           </div>
         </div>
         <div className="mt-5">
-          <button type="submit" className="btn btn-success">
+          <button type="submit" className="btn btn-success" disabled={loading}>
             Register
           </button>
         </div>
       </form>
     </div>
-  );
+  ); 
 };
 
 export default Register;
