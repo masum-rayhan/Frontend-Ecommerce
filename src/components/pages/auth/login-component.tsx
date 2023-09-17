@@ -1,24 +1,25 @@
-import React, { FormEvent, useState } from "react";
+import React, { useState } from "react";
 import { inputHelper } from "../../../helper";
 import { apiResponse, userModel } from "../../../interfaces";
 import { useLoginUserMutation } from "../../../apis/auth-api";
-import jwtDecode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { setLoggedInUser } from "../../../storage/redux/userAuth-slice";
+import { useNavigate } from "react-router-dom";
+import { MainLoader } from "../common";
 
 const Login = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [loginUser] = useLoginUserMutation();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState({
     userName: "",
-    password: ""
+    password: "",
   });
 
-  const handleInputUser = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleInputUser = (event: React.ChangeEvent<HTMLInputElement>) => {
     const tempData = inputHelper(event, userInput);
     setUserInput(tempData);
   };
@@ -29,15 +30,16 @@ const Login = () => {
 
     const response: apiResponse = await loginUser({
       userName: userInput.userName,
-      password: userInput.password
+      password: userInput.password,
     });
 
     if (response.data) {
       console.log(response.data);
-      const {token} = response.data.result;
-      const {fullName, id, email, role} : userModel = jwtDecode(token);
+      const { token } = response.data.result;
+      const { unique_name, nameid, email, role }: userModel = jwt_decode(token);
       localStorage.setItem("token", token);
-      dispatch(setLoggedInUser({fullName, id, email, role}));
+      dispatch(setLoggedInUser({ unique_name, nameid, email, role }));
+      navigate("/");
     } else if (response.error) {
       console.log(response.error.data.errorMessages[0]);
       setError(response.error.data.errorMessages[0]);
@@ -47,6 +49,7 @@ const Login = () => {
 
   return (
     <div className="container text-center">
+      {loading && <MainLoader />}
       <form method="post" onSubmit={handleSubmit}>
         <h1 className="mt-5">Login</h1>
         <div className="mt-5">
@@ -91,4 +94,3 @@ const Login = () => {
 };
 
 export default Login;
-
