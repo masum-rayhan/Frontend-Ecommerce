@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { inputHelper } from "../../../helper";
+import { apiResponse } from "../../../interfaces";
+import { useLoginUserMutation } from "../../../apis/auth-api";
 
 const Login = () => {
+  const [error, setError] = useState("");
+  const [loginUser] = useLoginUserMutation();
   const [loading, setLoading] = useState(false);
   const [userInput, setUserInput] = useState({
     userName: "",
@@ -15,9 +19,27 @@ const Login = () => {
     setUserInput(tempData);
   };
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setLoading(true);
+
+    const response: apiResponse = await loginUser({
+      userName: userInput.userName,
+      password: userInput.password
+    });
+
+    if (response.data) {
+      console.log(response.data);
+    } else if (response.error) {
+      console.log(response.error.data.errorMessages[0]);
+      setError(response.error.data.errorMessages[0]);
+    }
+    setLoading(false);
+  };
+
   return (
     <div className="container text-center">
-      <form method="post">
+      <form method="post" onSubmit={handleSubmit}>
         <h1 className="mt-5">Login</h1>
         <div className="mt-5">
           <div className="col-sm-6 offset-sm-3 col-xs-12 mt-4">
@@ -46,6 +68,7 @@ const Login = () => {
         </div>
 
         <div className="mt-2">
+          {error && <p className="text-danger">{error}</p>}
           <button
             type="submit"
             className="btn btn-success"
@@ -60,3 +83,7 @@ const Login = () => {
 };
 
 export default Login;
+function registerUser(arg0: { userName: string; name: any; password: string; role: any; }): any {
+  throw new Error("Function not implemented.");
+}
+
