@@ -7,6 +7,9 @@ import { useEffect } from "react";
 import { setShoppingCart } from "../storage/redux/shoppingCart-slice";
 import { ShoppingCart } from "../components/pages/cart";
 import { Login, Register } from "../components/pages/auth";
+import { userModel } from "../interfaces";
+import jwt_decode from "jwt-decode";
+import { setLoggedInUser } from "../storage/redux/userAuth-slice";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -14,6 +17,15 @@ const App = () => {
   const { data, isLoading } = useGetShoppingCartQuery(
     "6ee5c807-dda5-4336-8c60-36ea8b2898be"
   );
+
+  useEffect(() => {
+    const localToken = localStorage.getItem("token");
+    if (localToken) {
+      const { unique_name, nameid, email, role }: userModel =
+        jwt_decode(localToken);
+      dispatch(setLoggedInUser({ unique_name, nameid, email, role }));
+    }
+  }, []);
 
   useEffect(() => {
     if (!isLoading) {
