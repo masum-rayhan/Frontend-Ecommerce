@@ -1,6 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { inputHelper } from "../../../helper";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+  const [userInput, setUserInput] = useState({
+    userName: "",
+    password: ""
+  });
+
+  const handleInputUser = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const tempData = inputHelper(event, userInput);
+    setUserInput(tempData);
+  };
+
   return (
     <div className="container text-center">
       <form method="post">
@@ -12,6 +26,9 @@ const Login = () => {
               className="form-control"
               placeholder="Enter Username"
               required
+              name="userName"
+              value={userInput.userName}
+              onChange={handleInputUser}
             />
           </div>
 
@@ -21,6 +38,9 @@ const Login = () => {
               className="form-control"
               placeholder="Enter Password"
               required
+              name="password"
+              value={userInput.password}
+              onChange={handleInputUser}
             />
           </div>
         </div>
