@@ -83,7 +83,4 @@ const Login = () => {
 };
 
 export default Login;
-function registerUser(arg0: { userName: string; name: any; password: string; role: any; }): any {
-  throw new Error("Function not implemented.");
-}
 
