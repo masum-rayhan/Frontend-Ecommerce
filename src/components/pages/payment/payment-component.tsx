@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { PaymentForm } from ".";
-import { OrderSummary } from "../order";
+import { OrderSummary, OrderSummaryProps } from "../order";
 
 const Payment = () => {
   const {
@@ -24,7 +24,7 @@ const Payment = () => {
         <div className="container m-5 p-5">
           <div className="row">
             <div className="col-md-7">
-              <OrderSummary />
+              <OrderSummary data={apiResult} userInput={userInput} />
             </div>
             <div className="col-md-5">
               <PaymentForm />

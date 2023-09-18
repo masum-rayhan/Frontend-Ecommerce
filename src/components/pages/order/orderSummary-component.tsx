@@ -1,4 +1,6 @@
-const OrderSummary = () => {
+import { orderSummaryProps } from "./orderSummaryProps";
+
+const OrderSummary = ({data, userInput} : orderSummaryProps) => {
   return (
     <div>
       {" "}
