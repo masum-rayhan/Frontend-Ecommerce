@@ -17,7 +17,7 @@ import { userModel } from "../interfaces";
 import jwt_decode from "jwt-decode";
 import { setLoggedInUser } from "../storage/redux/userAuth-slice";
 import { RootState } from "../storage/redux/store";
-import Payment from "../components/pages/payment-component";
+import Payment from "../components/pages/payment/payment-component";
 
 const App = () => {
   const dispatch = useDispatch();
