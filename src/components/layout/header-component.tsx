@@ -56,9 +56,7 @@ const navigate = useNavigate();
                   to="/shopping-cart"
                 >
                   <i className="bi bi-cart"></i>{" "}
-                  {shoppingCartFromStore.length
-                    ? `(${shoppingCartFromStore.length})`
-                    : ""}
+                  {userData.nameid && `(${shoppingCartFromStore.length})`}
                 </NavLink>
               </li>
               <li className="nav-item">

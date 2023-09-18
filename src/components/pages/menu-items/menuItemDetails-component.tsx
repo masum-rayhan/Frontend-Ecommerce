@@ -3,10 +3,13 @@ import { useGetMenuItemsByIdQuery } from "../../../apis/menuItem-api";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUpdateShoppingCartMutation } from "../../../apis/shoppingCart-api";
 import { MainLoader, MiniLoader } from "../common";
-import { apiResponse } from "../../../interfaces";
+import { apiResponse, userModel } from "../../../interfaces";
 import { toastNotify } from "../../../helper";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../storage/redux/store";
 
 const MenuItemDetails = () => {
+  const userData : userModel = useSelector((state: RootState) => state.userAuthStore);
   const { menuItemId } = useParams();
   const { data, isLoading } = useGetMenuItemsByIdQuery(menuItemId);
 
@@ -25,6 +28,10 @@ const MenuItemDetails = () => {
   };
 
   const handleAddToCart = async (menuItemId: number) => {
+    if (!userData.nameid) {
+      navigate("/login");
+      return;
+    }
     setIsAddingToCart(true);
 
     const response : apiResponse= await updateShoppingCart({
