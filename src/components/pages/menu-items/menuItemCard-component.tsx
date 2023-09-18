@@ -25,15 +25,17 @@ const MenuItemCard = (props: Props) => {
     setIsAddingToCart(true);
 
     const response : apiResponse = await updateShoppingCart({
+      userId: userData.nameid,
       menuItemId: menuItemId,
-      updateQuantityBy: 1,
-      userId: "6ee5c807-dda5-4336-8c60-36ea8b2898be",
+      updateQuantityBy: 1
     });
     if(response.data && response.data.isSuccess) {
       toastNotify("Item added to cart successfully");
     }
     setIsAddingToCart(false);
   };
+
+  
   return (
     <div className="col-md-4 col-12 p-4">
       <div
