@@ -17,12 +17,14 @@ import { userModel } from "../interfaces";
 import jwt_decode from "jwt-decode";
 import { setLoggedInUser } from "../storage/redux/userAuth-slice";
 import { RootState } from "../storage/redux/store";
+import Payment from "../components/pages/payment-component";
 
 const App = () => {
   const dispatch = useDispatch();
   const userData : userModel = useSelector((state: RootState) => state.userAuthStore);
   const { data, isLoading } = useGetShoppingCartQuery(
     userData.nameid
+    //"b8d7ebba-5744-47a6-b974-3ca8e0b31b0f"
   );
 
 
@@ -58,6 +60,8 @@ const App = () => {
           <Route path="/authentication" element={<AuthTest />}></Route>
           <Route path="/authorization" element={<AuthTestAdmin />}></Route>
           <Route path="/accessDenied" element={<AccessDenied />}></Route>
+
+          <Route path="/payment" element={<Payment />}></Route>
 
           <Route path="*" element={<NotFound />}></Route>
         </Routes>

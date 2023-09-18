@@ -6,9 +6,9 @@ const paymentApi = createApi({
     baseUrl: "https://foodfancywebapi.azurewebsites.net/",
   }),
   endpoints: (builder) => ({   
-    initialPayment : builder.mutation({
+    initiatePayment : builder.mutation({
       query: (userId) => ({
-        url: `menuItem`,
+        url: `payment`,
         method: "POST",
         params: {
           userId: userId,
@@ -18,5 +18,5 @@ const paymentApi = createApi({
   }),
 });
 
-export const { useInitialPaymentMutation } = paymentApi;
+export const { useInitiatePaymentMutation } = paymentApi;
 export default paymentApi;
