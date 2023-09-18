@@ -7,7 +7,7 @@ const OrderSummary = ({ data, userInput }: orderSummaryProps) => {
       {" "}
       <h3 className="text-success">Order Summary</h3>
       <div className="mt-3">
-        <div className="border py-3 px-2">Name :{userInput.name}</div>
+        <div className="border py-3 px-2">Name : {userInput.name}</div>
         <div className="border py-3 px-2">Email : {userInput.email}</div>
         <div className="border py-3 px-2">Phone : {userInput.phoneNumber}</div>
         <div className="border py-3 px-2">
