@@ -59,7 +59,7 @@ const navigate = useNavigate();
                   {userData.nameid && `(${shoppingCartFromStore.length})`}
                 </NavLink>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <NavLink
                   className="nav-link"
                   aria-current="page"
@@ -76,7 +76,7 @@ const navigate = useNavigate();
                 >
                   Authorization
                 </NavLink>
-              </li>
+              </li> */}
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
