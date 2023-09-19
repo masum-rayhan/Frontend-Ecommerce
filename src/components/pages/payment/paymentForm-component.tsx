@@ -9,12 +9,14 @@ import { orderSummaryProps } from "../order/orderSummaryProps";
 import { apiResponse, cartItemModel } from "../../../interfaces";
 import { useCreateOrderMutation } from "../../../apis/order-api";
 import { SD_OrderStatus } from "../../../utils/SD";
+import { useNavigate } from "react-router-dom";
 
 const PaymentForm = ({ data, userInput }: orderSummaryProps) => {
+  const navigate = useNavigate();
   const [createOrder] = useCreateOrderMutation();
   const stripe = useStripe();
   const elements = useElements();
-  const [isProcessing, setProcessing] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,10 +40,10 @@ const PaymentForm = ({ data, userInput }: orderSummaryProps) => {
       // Show error to your customer (for example, payment details incomplete)
       toastNotify("An unexpected error occurred.", "error");
 
-      setProcessing(false);
+      setIsProcessing(false);
     } else {
       console.log(result);
-      
+
       //     "applicationUserId": "string",
       //     "orderTotal": 0,
       //     "stripePaymentIntentId": "string",
@@ -72,9 +74,23 @@ const PaymentForm = ({ data, userInput }: orderSummaryProps) => {
         orderDetailsDTO: orderDetailsDTO,
         stripePaymentIntentId: data.stripePaymentIntentId,
         applicationUserId: data.userId,
-        status: result.paymentIntent?.status === "succeeded" ? SD_OrderStatus.CONFIRMED : SD_OrderStatus.PENDING,
+        status:
+          result.paymentIntent?.status === "succeeded"
+            ? SD_OrderStatus.CONFIRMED
+            : SD_OrderStatus.PENDING,
       });
+
+      if (response) {
+        if (response.data?.result.status == SD_OrderStatus.CONFIRMED) {
+          navigate(
+            `/order/orderConfirmed/${response.data?.result.orderHeaderId}`
+          );
+        } else {
+          navigate("/failed");
+        }
+      }
     }
+    setIsProcessing(false);
   };
 
   return (
