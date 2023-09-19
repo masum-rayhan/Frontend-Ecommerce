@@ -5,8 +5,10 @@ import {
 } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { toastNotify } from "../../../helper";
+import { orderSummaryProps } from "../order/orderSummaryProps";
+import { cartItemModel } from "../../../interfaces";
 
-const PaymentForm = () => {
+const PaymentForm = ({ data, userInput }: orderSummaryProps) => {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setProcessing] = useState(false);
@@ -33,9 +35,29 @@ const PaymentForm = () => {
       // Show error to your customer (for example, payment details incomplete)
       toastNotify("An unexpected error occurred.", "error");
 
-      setProcessing(false); 
+      setProcessing(false);
     } else {
-        console.log(result);
+      console.log(result);
+      // {
+      //     "pickupName": "string",
+      //     "pickupPhoneNumber": "string",
+      //     "pickupEmail": "string",
+      //     "applicationUserId": "string",
+      //     "orderTotal": 0,
+      //     "stripePaymentIntentId": "string",
+      //     "status": "string",
+      //     "totalItems": 0,
+
+      const orderDetailsDTO: any[] = [];
+      data.cartItems.forEach((item: cartItemModel) => {
+        const tempOrderDetails: any = {};
+        tempOrderDetails["menuItemId"] = item.menuItem?.id;
+        tempOrderDetails["quantity"] = item.quantity;
+        tempOrderDetails["itemName"] = item.menuItem?.name;
+        tempOrderDetails["price"] = item.menuItem?.price;
+
+        orderDetailsDTO.push(tempOrderDetails);
+      });
     }
   };
 
