@@ -6,9 +6,12 @@ import {
 import { useState } from "react";
 import { toastNotify } from "../../../helper";
 import { orderSummaryProps } from "../order/orderSummaryProps";
-import { cartItemModel } from "../../../interfaces";
+import { apiResponse, cartItemModel } from "../../../interfaces";
+import { useCreateOrderMutation } from "../../../apis/order-api";
+import { SD_OrderStatus } from "../../../utils/SD";
 
 const PaymentForm = ({ data, userInput }: orderSummaryProps) => {
+  const [createOrder] = useCreateOrderMutation();
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setProcessing] = useState(false);
@@ -38,15 +41,14 @@ const PaymentForm = ({ data, userInput }: orderSummaryProps) => {
       setProcessing(false);
     } else {
       console.log(result);
-      // {
-      //     "pickupName": "string",
-      //     "pickupPhoneNumber": "string",
-      //     "pickupEmail": "string",
+      
       //     "applicationUserId": "string",
       //     "orderTotal": 0,
       //     "stripePaymentIntentId": "string",
       //     "status": "string",
-      //     "totalItems": 0,
+      //
+      let grandTotal = 0;
+      let totalItems = 0;
 
       const orderDetailsDTO: any[] = [];
       data.cartItems.forEach((item: cartItemModel) => {
@@ -57,6 +59,20 @@ const PaymentForm = ({ data, userInput }: orderSummaryProps) => {
         tempOrderDetails["price"] = item.menuItem?.price;
 
         orderDetailsDTO.push(tempOrderDetails);
+
+        grandTotal += item.menuItem?.price! * item.quantity!;
+        totalItems += item.quantity!;
+      });
+      const response: apiResponse = await createOrder({
+        pickupName: userInput.name,
+        pickupPhoneNumber: userInput.phoneNumber,
+        pickupEmail: userInput.email,
+        orderTotal: grandTotal,
+        totalItems: totalItems,
+        orderDetailsDTO: orderDetailsDTO,
+        stripePaymentIntentId: data.stripePaymentIntentId,
+        applicationUserId: data.userId,
+        status: result.paymentIntent?.status === "succeeded" ? SD_OrderStatus.CONFIRMED : SD_OrderStatus.PENDING,
       });
     }
   };
